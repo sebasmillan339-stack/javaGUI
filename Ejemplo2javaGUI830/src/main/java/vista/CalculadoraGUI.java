@@ -36,7 +36,7 @@ public class CalculadoraGUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtnota2 = new javax.swing.JTextField();
         Evaluar = new javax.swing.JToggleButton();
-        jLabel4 = new javax.swing.JLabel();
+        lblResultado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,8 +53,6 @@ public class CalculadoraGUI extends javax.swing.JFrame {
         Evaluar.setText("Evaluar");
         Evaluar.addActionListener(this::EvaluarActionPerformed);
 
-        jLabel4.setText("jLabel4");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -70,7 +68,7 @@ public class CalculadoraGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(Evaluar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblResultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,9 +88,9 @@ public class CalculadoraGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtnota2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Evaluar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(61, 61, 61)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lblResultado, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -119,6 +117,26 @@ public class CalculadoraGUI extends javax.swing.JFrame {
 
     private void EvaluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvaluarActionPerformed
         // TODO add your handling code here:
+        try{
+        //capturar los datos
+        String nombre =txtnombre.getText().trim();
+        double nota1 = Double.parseDouble(txtnota1.getText());
+        double nota2 = Double.parseDouble(txtnota2.getText());
+        //instanciar el objeto
+        modelo.Estudiante estudiante = new modelo.Estudiante (nombre, nota1, nota2);
+        //pedirle al objeto que trabaje y actualice la interfaz
+        String mensaje = String.format("Estudiante %s | Definitiva: %.2f(%s)",
+               estudiante.getNombre(),
+               estudiante.calcularDefinitiva(),
+               estudiante.obtenerEstado());
+        lblResultado.setText(mensaje);
+        }
+        catch(NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                    "por favor ingresar valores numericos validos",
+                    "Error de formato",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_EvaluarActionPerformed
 
     /**
@@ -151,8 +169,8 @@ public class CalculadoraGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblResultado;
     private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtnota1;
     private javax.swing.JTextField txtnota2;
